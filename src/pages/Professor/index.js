@@ -29,7 +29,7 @@ const columns = [
   },
 ];
 
-const INITIAL_STATE = {id = 0, name = "", department = "", department_id: 0};
+const INITIAL_STATE = {id: 0, name: "", department: "",};
 
 const Professors = () => {
     const [visible, setVisible] = useState(false);
@@ -111,7 +111,7 @@ const Professors = () => {
                     title={`${professor.id ? "Update" : "Create"} Course`}
                     show={visible}
                     handleClose={() => setVisible(false)}
-                    handleClose={() => handleSave(refetch)}
+                    handleSave={() => handleSave(refetch)}
                     >
                         <Form>
                             <Form.Group>
