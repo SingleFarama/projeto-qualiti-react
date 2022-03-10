@@ -60,28 +60,6 @@ const Allocations = () => {
   const [professor, setProfessors] = useState([]);
   const [allocation, setAllocations] = useState(INITIAL_STATE);
 
-  useEffect(() => {
-    api
-        .get("/courses")
-        .then((response) => {
-            setCourses(response.data);
-        })
-        .catch((error) => {
-            toast.error(error.message);
-        });
-}, []);
-
-useEffect(() => {
-    api
-        .get("/professors")
-        .then((response) => {
-            setProfessors(response.data);
-        })
-        .catch((error) => {
-            toast.error(error.message);
-        });
-}, []);
-
   const handleSave = async (refetch) => {
     try {
       if (allocation.id) {
