@@ -15,10 +15,6 @@ const columns = [
     id: "id",
   },
   {
-    value: "Name",
-    id: "name",
-  },
-  {
       value: "Professor",
       id: "professor",
       render: (professor) => professor.name,
@@ -40,7 +36,7 @@ const columns = [
   },
   {
     value: "DayofWeek",
-    id: "DayOfWeek",
+    id: "dayOfWeek",
   },
   {
     value: "StartHour",
@@ -52,7 +48,7 @@ const columns = [
   },
 ];
 
-const INITIAL_STATE = { id: 0, name: "" };
+const INITIAL_STATE = { id: 0, professor: "", professorId: 0, course: "", courseId: 0};
 
 const Allocations = () => {
   const [visible, setVisible] = useState(false);
