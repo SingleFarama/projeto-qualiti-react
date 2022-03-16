@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 
@@ -9,30 +9,31 @@ import api from "../../services/axios";
 
 const endpoint = "/allocations";
 
+
 const columns = [
   {
     value: "ID",
     id: "id",
   },
+  // {
+  //   value: "ProfessorId",
+  //   id: "professorId",
+  //   render: (professor) => professor.id,
+  // },
   {
-      value: "Professor",
-      id: "professor",
-      render: (professor) => professor.name,
+    value: "Professor",
+    id: "professor",
+    render: (professor) => professor.name,
   },
-  {
-      value: "ProfessorId",
-      id: "professor",
-      render: (professor) => professor.id,
-  },
+  // {
+  //   value: "CourseId",
+  //   id: "course",
+  //   render: (course) => course.id,
+  // },
   {
     value: "Course",
     id: "course",
     render: (course) => course.name,
-  },
-  {
-    value: "CourseId",
-    id: "course",
-    render: (course) => course.id,
   },
   {
     value: "DayofWeek",
@@ -48,34 +49,49 @@ const columns = [
   },
 ];
 
-const INITIAL_STATE = { id: 0, professor: "", professorId: 0, course: "", courseId: 0};
+const INITIAL_STATE = { id: 0, professorId: 0, courseId: 0 };
 
 const Allocations = () => {
   const [visible, setVisible] = useState(false);
-  const [course, setCourses] = useState([]);
-  const [professor, setProfessors] = useState([]);
-  const [allocation, setAllocations] = useState(INITIAL_STATE);
+  const [courses, setCourses] = useState([]);
+  const [professors, setProfessors] = useState([]);
+  const [allocation, setAllocation] = useState(INITIAL_STATE);
+
+  useEffect(() => {
+    api
+      .get("/professors")
+      .then((response) => {
+        setProfessors(response.data);
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+    api
+      .get("/courses")
+      .then((response) => {
+        setCourses(response.data);
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  }, []);
+
 
   const handleSave = async (refetch) => {
+    const data = {
+      professorId: allocation.professorId,
+      courseId: allocation.courseId,
+      dayOfWeek: allocation.dayOfWeek,
+      startHour: allocation.startHour,
+      endHour: allocation.endHour,
+    };
     try {
       if (allocation.id) {
-        await api.put(`${endpoint}/${allocation.id}`, {
-          name: allocation.name,
-          professor: allocation.professor,
-          course: allocation.course,
-          DayOfWeek: allocation.DayOfWeek,
-          startHour: allocation.startHour,
-          endHour: allocation.endHour,
-        });
+        await api.put(`${endpoint}/${allocation.id}`, data);
 
         toast.success("Atualizado com sucesso!");
       } else {
-        await api.post(endpoint, { name: allocation.name,
-            professor: allocation.professor,
-            course: allocation.course,
-            DayOfWeek: allocation.DayOfWeek,
-            startHour: allocation.startHour,
-            endHour: allocation.endHour, });
+        await api.post(endpoint, data);
 
         toast.success("Cadastrado com sucesso!");
       }
@@ -91,8 +107,8 @@ const Allocations = () => {
   const actions = [
     {
       name: "Edit",
-      action: (_allocation) => {
-        setAllocations(_allocation);
+      action: ({ id, professor: { id: professorId }, course: { id: courseId }, dayOfWeek, startHour, endHour, }) => {
+        setAllocation({ id, professorId, courseId, dayOfWeek, startHour, endHour });
         setVisible(true);
       },
     },
@@ -111,13 +127,19 @@ const Allocations = () => {
       },
     },
   ];
+  const onChange = ({ target: { name, value } }) => {
+    setAllocation({
+      ...allocation,
+      [name]: value,
+    });
+  };
 
   return (
     <Page title="Alocações">
       <Button
         className="mb-2"
         onClick={() => {
-          setAllocations(INITIAL_STATE);
+          setAllocation(INITIAL_STATE);
           setVisible(true);
         }}
       >
@@ -126,20 +148,66 @@ const Allocations = () => {
       <ListView actions={actions} columns={columns} endpoint={endpoint}>
         {({ refetch }) => (
           <Modal
-            title={`${course.id ? "Update" : "Create"} Course`}
+            title={`${allocation.id ? "Update" : "Create"} Allocation`}
             show={visible}
             handleClose={() => setVisible(false)}
             handleSave={() => handleSave(refetch)}
           >
             <Form>
-              <Form.Group>
-                <Form.Label>Allcations Name</Form.Label>
+              <Form.Group className="mt-4">
+                <Form.Label>Professor Nome</Form.Label>
+                <select
+                  className="form-control"
+                  name="professorId"
+                  onChange={onChange}
+                  value={allocation.professorId}
+                >
+                  <option>Escolha um Professor</option>
+                  {professors.map((professor, index) => (
+                    <option key={`professo-${index}`} value={professor.id}>
+                      {professor.name}
+                    </option>
+                  ))}
+                </select>
+              </Form.Group>
+              <Form.Group className="mt-4">
+                <Form.Label>Curso Nome</Form.Label>
+                <select
+                  className="form-control"
+                  name="courseId"
+                  onChange={onChange}
+                  value={allocation.courseId}
+                >
+                  <option>Escolha um Curso</option>
+                  {courses.map((course, index) => (
+                    <option key={`cours-${index}`} value={course.id}>
+                      {course.name}
+                    </option>
+                  ))}
+                </select>
+              </Form.Group>
+              <Form.Group className="mt-4">
+                <Form.Label>Dia da Semana</Form.Label>
                 <Form.Control
-                  name="allocation"
-                  onChange={(event) =>
-                    setAllocations({ ...allocation, name: event.target.value })
-                  }
-                  value={allocation.name}
+                  name="dayOfWeek"
+                  onChange={onChange}
+                  value={allocation.dayOfWeek}
+                />
+              </Form.Group>
+              <Form.Group className="mt-4">
+                <Form.Label>Começo da Hora</Form.Label>
+                <Form.Control
+                  name="startHour"
+                  onChange={onChange}
+                  value={allocation.startHour}
+                />
+              </Form.Group>
+              <Form.Group className="mt-4">
+                <Form.Label>Fim da Hora</Form.Label>
+                <Form.Control
+                  name="endHour"
+                  onChange={onChange}
+                  value={allocation.endHour}
                 />
               </Form.Group>
             </Form>
