@@ -9,27 +9,20 @@ import api from "../../services/axios";
 
 const endpoint = "/allocations";
 
+const FormatHour = {
+
+}
 
 const columns = [
   {
     value: "ID",
     id: "id",
   },
-  // {
-  //   value: "ProfessorId",
-  //   id: "professorId",
-  //   render: (professor) => professor.id,
-  // },
   {
     value: "Professor",
     id: "professor",
     render: (professor) => professor.name,
   },
-  // {
-  //   value: "CourseId",
-  //   id: "course",
-  //   render: (course) => course.id,
-  // },
   {
     value: "Course",
     id: "course",
