@@ -1,8 +1,33 @@
-import { useState, useEffect } from "react";
-import { Button, Form } from "react-bootstrap";
-import { toast } from "react-toastify";
 
-import ListView from "../../components/ListView/index";
-import Modal from "../../components/Modal/index";
-import Page from "../../components/Page/index";
-import api from "../../services/axios";
+const diaDaSemana = [
+    {
+      value: "MONDAY",
+      id: "segunda",
+    },
+    {
+      value: "TUESDAY",
+      id: "terca",
+    },
+    {
+      value: "WEDNESDAY",
+      id: "quarta",
+    },
+    {
+      value: "THURSDAY",
+      id: "quinta",
+    },
+    {
+      value: "FRIDAY",
+      id: "sexta",
+    },
+    {
+      value: "SATURDAY",
+      id: "sabado",
+    },
+    {
+      value: "SUNDAY",
+      id: "domingo",
+    },
+  ];
+
+  export default diaDaSemana;

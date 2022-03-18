@@ -160,7 +160,7 @@ const Professors = () => {
                 >
                   <option>Escolha um Departamento</option>
                   {departments.map((department, index) => (
-                    <option key={index} value={department.id}>
+                    <option key={`department-${index}`} value={department.id}>
                       {department.name}
                     </option>
                   ))}
