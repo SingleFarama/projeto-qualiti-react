@@ -1,32 +1,32 @@
 
-const diaDaSemana = [
+var diaDaSemana = [
     {
-      value: "MONDAY",
-      id: "segunda",
+      name: "MONDAY",
+      id: "MONDAY",
     },
     {
-      value: "TUESDAY",
-      id: "terca",
+      name: "TUESDAY",
+      id: "TUESDAY",
     },
     {
-      value: "WEDNESDAY",
-      id: "quarta",
+      name: "WEDNESDAY",
+      id: "WEDNESDAY",
     },
     {
-      value: "THURSDAY",
-      id: "quinta",
+      name: "THURSDAY",
+      id: "THURSDAY",
     },
     {
-      value: "FRIDAY",
-      id: "sexta",
+      name: "FRIDAY",
+      id: "FRIDAY",
     },
     {
-      value: "SATURDAY",
-      id: "sabado",
+      name: "SATURDAY",
+      id: "SATURDAY",
     },
     {
-      value: "SUNDAY",
-      id: "domingo",
+      name: "SUNDAY",
+      id: "SUNDAY",
     },
   ];
 

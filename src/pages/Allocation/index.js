@@ -7,7 +7,7 @@ import Modal from "../../components/Modal/index";
 import Page from "../../components/Page/index";
 import api from "../../services/axios";
 
-import diaDaSemana from './AllocationTime.js'
+import diaDaSemana from './AllocationTime.js';
 
 const endpoint = "/allocations";
 
@@ -44,6 +44,7 @@ const columns = [
   },
 ];
 
+
 const INITIAL_STATE = { id: 0, professorId: 0, courseId: 0, dayOfWeek: "", startHour: 0, endHour: 0 };
 
 const Allocations = () => {
@@ -70,7 +71,6 @@ const Allocations = () => {
         toast.error(error.message);
       });
   }, []);
-
 
   const handleSave = async (refetch) => {
     const data = {
@@ -102,8 +102,8 @@ const Allocations = () => {
   const actions = [
     {
       name: "Edit",
-      action: ({ id, professor: { id: professorId }, course: { id: courseId }, diaDaSemana: {id: diaDaSemana}, startHour, endHour, }) => {
-        setAllocation({ id, professorId, courseId, diaDaSemana, startHour, endHour });
+      action: ({ id, professor: { id: professorId }, course: { id: courseId }, dayOfWeek, startHour, endHour, }) => {
+        setAllocation({ id, professorId, courseId, dayOfWeek, startHour, endHour });
         setVisible(true);
       },
     },
@@ -190,9 +190,9 @@ const Allocations = () => {
                   value={allocation.dayOfWeek}
                 >
                   <option>Escolha um dia</option>
-                  {diaDaSemana.map((diaDaSemana, dayOfWeek) => (
-                    <option key={diaDaSemana} value={diaDaSemana.id}>
-                      {dayOfWeek.name}
+                  {diaDaSemana.map((diaDaSemana, index) => (
+                    <option key={`-dia-${index}`} value={diaDaSemana.id}>
+                      {diaDaSemana.name}
                     </option>
                   ))}
                 </select>
