@@ -36,7 +36,7 @@ const columns = [
   },
   {
     value: "StartHour",
-    id: "startHour",
+    id: "startHour".split("+"),
   },
   {
     value: "EndHour",
@@ -77,8 +77,8 @@ const Allocations = () => {
       professorId: allocation.professorId,
       courseId: allocation.courseId,
       dayOfWeek: allocation.dayOfWeek,
-      startHour: allocation.startHour,
-      endHour: allocation.endHour,
+      startHour: allocation.startHour.split("+"),
+      endHour: allocation.endHour.replace(/^(\d{2})(\d{2})/, "$1,$2:"),
     };
     try {
       if (allocation.id) {
