@@ -83,12 +83,16 @@ const Professors = () => {
   const handleSave = async (refetch) => {
     const data = {
       name: professor.name,
-      cpf: professor.cpf,
+      cpf: professor.cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"),
       departmentId: professor.departmentId,
     };
 
     try {
+
+    if(professor.cpf.length == 14) {
+    
       if (professor.id) {
+
         await api.put(`${endpoint}/${professor.id}`, data);
 
         toast.success("Atualizado com sucesso!");
@@ -99,8 +103,25 @@ const Professors = () => {
       }
 
       setVisible(false);
-
       await refetch();
+
+    } else if (professor.cpf.length == 11) {
+        if (professor.id) {
+          await api.put(`${endpoint}/${professor.id}`, data);
+  
+          toast.success("Atualizado com sucesso!");
+        } else {
+          await api.post(endpoint, data);
+  
+          toast.success("Cadastrado com sucesso!");
+        }
+  
+        setVisible(false);
+        await refetch();
+      
+    } else {
+      toast.error("Este não é um formato correto");
+    }
     } catch (error) {
       toast.error(error.message);
     }
@@ -143,7 +164,7 @@ const Professors = () => {
                 />
               </Form.Group>
               <Form.Group className="mt-4">
-                <Form.Label>CPF</Form.Label>
+                <Form.Label>CPF - Ex: 000.000.000-00</Form.Label>
                 <Form.Control
                   name="cpf"
                   onChange={onChange}
