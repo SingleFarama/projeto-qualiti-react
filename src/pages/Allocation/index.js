@@ -11,10 +11,6 @@ import diaDaSemana from './AllocationTime.js';
 
 const endpoint = "/allocations";
 
-const FormatHour = {
-
-}
-
 const columns = [
   {
     value: "ID",
@@ -26,26 +22,26 @@ const columns = [
     render: (professor) => professor.name,
   },
   {
-    value: "Course",
+    value: "Curso",
     id: "course",
     render: (course) => course.name,
   },
   {
-    value: "DayofWeek",
+    value: "Dia da Semana",
     id: "dayOfWeek",
   },
   {
-    value: "StartHour",
-    id: "startHour".split("+"),
+    value: "Inicil",
+    id: "startHour",
   },
   {
-    value: "EndHour",
+    value: "Fim",
     id: "endHour",
   },
 ];
 
 
-const INITIAL_STATE = { id: 0, professorId: 0, courseId: 0, dayOfWeek: "", startHour: 0, endHour: 0 };
+const INITIAL_STATE = { id: 0, professorId: 0, courseId: 0, dayOfWeek: ""};
 
 const Allocations = () => {
   const [visible, setVisible] = useState(false);
@@ -77,8 +73,8 @@ const Allocations = () => {
       professorId: allocation.professorId,
       courseId: allocation.courseId,
       dayOfWeek: allocation.dayOfWeek,
-      startHour: allocation.startHour.split("+"),
-      endHour: allocation.endHour.replace(/^(\d{2})(\d{2})/, "$1,$2:"),
+      startHour: allocation.startHour + "+0000",
+      endHour: allocation.endHour + "+0000",
     };
     try {
       if (allocation.id) {
@@ -101,14 +97,14 @@ const Allocations = () => {
 
   const actions = [
     {
-      name: "Edit",
+      name: "Editar",
       action: ({ id, professor: { id: professorId }, course: { id: courseId }, dayOfWeek, startHour, endHour, }) => {
         setAllocation({ id, professorId, courseId, dayOfWeek, startHour, endHour });
         setVisible(true);
       },
     },
     {
-      name: "Remove",
+      name: "Remover",
       action: async (item, refetch) => {
         if (window.confirm("Você tem certeza que deseja remover?")) {
           try {
@@ -138,19 +134,19 @@ const Allocations = () => {
           setVisible(true);
         }}
       >
-        Criar Alocações
+        Criar Alocação
       </Button>
       <ListView actions={actions} columns={columns} endpoint={endpoint}>
         {({ refetch }) => (
           <Modal
-            title={`${allocation.id ? "Update" : "Create"} Allocation`}
+            title={`${allocation.id ? "Edite uma" : "Crie uma"} Alocação`}
             show={visible}
             handleClose={() => setVisible(false)}
             handleSave={() => handleSave(refetch)}
           >
             <Form>
               <Form.Group className="mt-4">
-                <Form.Label>Professor Nome</Form.Label>
+                <Form.Label>Professor</Form.Label>
                 <select
                   className="form-control"
                   name="professorId"
@@ -166,7 +162,7 @@ const Allocations = () => {
                 </select>
               </Form.Group>
               <Form.Group className="mt-4">
-                <Form.Label>Curso Nome</Form.Label>
+                <Form.Label>Curso</Form.Label>
                 <select
                   className="form-control"
                   name="courseId"
@@ -198,19 +194,21 @@ const Allocations = () => {
                 </select>
               </Form.Group>
               <Form.Group className="mt-4">
-                <Form.Label>Começo da Hora</Form.Label>
+                <Form.Label>Inicil</Form.Label>
                 <Form.Control
                   name="startHour"
                   onChange={onChange}
                   value={allocation.startHour}
+                  placeholder= "Ex: 00:00"
                 />
               </Form.Group>
               <Form.Group className="mt-4">
-                <Form.Label>Fim da Hora</Form.Label>
+                <Form.Label>Fim</Form.Label>
                 <Form.Control
                   name="endHour"
                   onChange={onChange}
                   value={allocation.endHour}
+                  placeholder= "Ex: 00:00"
                 />
               </Form.Group>
             </Form>

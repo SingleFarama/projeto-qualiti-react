@@ -15,7 +15,7 @@ const columns = [
     id: "id",
   },
   {
-    value: "Name",
+    value: "Nome",
     id: "name",
   },
   {
@@ -23,12 +23,7 @@ const columns = [
     id: "cpf",
   },
   {
-    value: "DepartamentId",
-    id: "department",
-    render: (departament) => departament.id,
-  },
-  {
-    value: "Departament",
+    value: "Departamento",
     id: "department",
     render: (departament) => departament.name,
   },
@@ -54,14 +49,14 @@ const Professors = () => {
 
   const actions = [
     {
-      name: "Edit",
+      name: "Editar",
       action: ({ id, name, cpf, department: { id: departmentId } }) => {
         setProfessor({ id, cpf, name, departmentId });
         setVisible(true);
       },
     },
     {
-      name: "Remove",
+      name: "Remover",
       action: async (item, refetch) => {
         if (
           window.confirm(
@@ -143,20 +138,20 @@ const Professors = () => {
           setVisible(true);
         }}
       >
-        Criar Professores
+        Criar Professor
       </Button>
 
       <ListView actions={actions} columns={columns} endpoint={endpoint}>
         {({ refetch }) => (
           <Modal
-            title={`${professor.id ? "Update" : "Create"} Professor`}
+            title={`${professor.id ? "Edite um" : "Crie um"} Professor`}
             show={visible}
             handleClose={() => setVisible(false)}
             handleSave={() => handleSave(refetch)}
           >
             <Form>
               <Form.Group>
-                <Form.Label>Nome</Form.Label>
+                <Form.Label>Nome do Professor</Form.Label>
                 <Form.Control
                   name="name"
                   onChange={onChange}
@@ -164,11 +159,12 @@ const Professors = () => {
                 />
               </Form.Group>
               <Form.Group className="mt-4">
-                <Form.Label>CPF - Ex: 000.000.000-00</Form.Label>
+                <Form.Label>CPF do Professor</Form.Label>
                 <Form.Control
                   name="cpf"
                   onChange={onChange}
                   value={professor.cpf}
+                  placeholder= "Ex: 000.000.000-00"
                 />
               </Form.Group>
               <Form.Group className="mt-4">

@@ -2,7 +2,7 @@ import { Table, Dropdown } from "react-bootstrap";
 
 const TableComponent = ({ actions, columns = [], items = [], refetch }) => {
   if (!items.length) {
-    return <h3>There's not data created</h3>;
+    return <h3>Não tem Nenhuma Informação para Mostrar</h3>;
   }
 
   return (
@@ -13,7 +13,7 @@ const TableComponent = ({ actions, columns = [], items = [], refetch }) => {
             <th key={`Head-${index}`}>{column.value}</th>
           ))}
 
-          {actions && <th>Actions</th>}
+          {actions && <th>Ações</th>}
         </tr>
       </thead>
       <tbody>
@@ -32,7 +32,7 @@ const TableComponent = ({ actions, columns = [], items = [], refetch }) => {
               <td>
                 <Dropdown>
                   <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                    Actions
+                  Ações
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>

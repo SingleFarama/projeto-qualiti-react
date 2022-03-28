@@ -15,7 +15,7 @@ const columns = [
     id: "id",
   },
   {
-    value: "Name",
+    value: "Nome",
     id: "name",
   },
 ];
@@ -50,14 +50,14 @@ const Courses = () => {
 
   const actions = [
     {
-      name: "Edit",
+      name: "Editar",
       action: (_course) => {
         setCourse(_course);
         setVisible(true);
       },
     },
     {
-      name: "Remove",
+      name: "Remover",
       action: async (item, refetch) => {
         if (window.confirm("Você tem certeza que deseja remover?")) {
           try {
@@ -86,14 +86,14 @@ const Courses = () => {
       <ListView actions={actions} columns={columns} endpoint={endpoint}>
         {({ refetch }) => (
           <Modal
-            title={`${course.id ? "Update" : "Create"} Course`}
+            title={`${course.id ? "Edite um" : "Crie um"} Curso`}
             show={visible}
             handleClose={() => setVisible(false)}
             handleSave={() => handleSave(refetch)}
           >
             <Form>
               <Form.Group>
-                <Form.Label>Course Name</Form.Label>
+                <Form.Label>Nome do Curso</Form.Label>
                 <Form.Control
                   name="course"
                   onChange={(event) =>

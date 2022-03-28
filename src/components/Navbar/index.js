@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 
 const Topbar = ({ location, routes = [] }) => {
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
+    <Navbar bg="success" variant="dark" expand="lg" sticky="top">
       <Container>
-        <Navbar.Brand href="#home">Professor Allocation</Navbar.Brand>
+        <Navbar.Brand href="#home">Professsor Allocation</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -18,7 +18,7 @@ const Topbar = ({ location, routes = [] }) => {
                     location.pathname === route.path ? "active" : ""
                   }`}
                   to={route.path}
-                  key={index}
+                  key={`-SU${index}`}
                 >
                   {route.name}
                 </Link>

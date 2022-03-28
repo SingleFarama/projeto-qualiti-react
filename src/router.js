@@ -5,7 +5,6 @@ import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import Courses from "./pages/Courses";
 import Allocation from "./pages/Allocation";
-// import AllocationManage from "./pages/Allocation/AllocationManage";
 import Department from "./pages/Department";
 import Professor from "./pages/Professor";
 
@@ -17,29 +16,23 @@ const routes = [
     component: Home,
   },
   {
-     path: "/allocations",
-     name: "Allocations",
-     component: Allocation,
+    path: "/allocations",
+    name: "Alocações",
+    component: Allocation,
   },
-//  {
-//     path: "/allocations/:id",
-//     name: "Allocations",
-//     visible: false,
-//     component: AllocationManage,
-//  },
   {
-     path: "/departament",
-     name: "Departament",
-     component: Department,
+    path: "/departament",
+    name: "Departamentos",
+    component: Department,
   },
   {
     path: "/courses",
-    name: "Courses",
+    name: "Cursos",
     component: Courses,
   },
   {
     path: "/professor",
-    name: "Professor",
+    name: "Professores",
     component: Professor,
   },
 ];
@@ -52,7 +45,7 @@ const Router = () => (
           <Route
             component={route.component}
             exact
-            key={index}
+            key={`-B-${index}`}
             path={route.path}
           />
         ))}
