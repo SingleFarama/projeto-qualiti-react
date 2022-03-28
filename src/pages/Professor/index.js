@@ -6,6 +6,7 @@ import ListView from "../../components/ListView";
 import Modal from "../../components/Modal";
 import Page from "../../components/Page";
 import api from "../../services/axios";
+import IMask from "imask";
 
 const endpoint = "/professors";
 
@@ -161,10 +162,12 @@ const Professors = () => {
               <Form.Group className="mt-4">
                 <Form.Label>CPF do Professor</Form.Label>
                 <Form.Control
+                  id="cpf"
                   name="cpf"
                   onChange={onChange}
                   value={professor.cpf}
                   placeholder= "Ex: 000.000.000-00"
+                  maxLength={14}
                 />
               </Form.Group>
               <Form.Group className="mt-4">
