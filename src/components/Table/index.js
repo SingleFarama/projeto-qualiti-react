@@ -13,26 +13,38 @@ const TableComponent = ({ actions, columns = [], items = [], refetch }) => {
             <th key={`Head-${index}`}>{column.value}</th>
           ))}
 
-          {actions && <th>Ações</th>}
+          {actions && <th>Actions</th>}
         </tr>
       </thead>
       <tbody>
-        {items.map((item, index) => (
+      {items.map((item, index) => (
           <tr key={`Body-${index}`}>
             {columns.map((column, indexColumn) => {
-              const value = item[column.id];
+
+              const value = checkState(item[column.id]);
 
               return (
                 <td key={indexColumn}>
                   {column.render ? column.render(value) : value}
                 </td>
               );
+
+
+              function checkState(value){
+                const item_column = value.toString();
+
+                if(item_column.indexOf("+0000") !== -1){
+                  return item_column.replace('+0000', '');
+                }else{
+                  return item[column.id]
+                }
+              }
             })}
             {actions && (
               <td>
                 <Dropdown>
                   <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                  Ações
+                    Actions
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>

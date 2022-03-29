@@ -10,7 +10,7 @@ import Professor from "./pages/Professor";
 
 const routes = [
   {
-    path: "/home",
+    path: "/",
     name: "Home",
     visible: false,
     component: Home,

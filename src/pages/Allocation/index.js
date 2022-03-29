@@ -41,7 +41,7 @@ const columns = [
 ];
 
 
-const INITIAL_STATE = { id: 0, professorId: 0, courseId: 0, dayOfWeek: "", startHour: "00:00", endHour: "00:00"};
+const INITIAL_STATE = { id: 0, professorId: 0, courseId: 0, dayOfWeek: "", startHour: "", endHour: ""};
 
 const Allocations = () => {
   const [visible, setVisible] = useState(false);
@@ -198,8 +198,8 @@ const Allocations = () => {
                 <Form.Control
                   name="startHour"
                   onChange={onChange}
-                  value={allocation.startHour}
-                  placeholder= "Ex: 00:00"
+                  value={(allocation.startHour ? allocation.startHour.replace('+0000', '') : allocation.startHour)}
+                  placeholder="Ex.: 20:00"
                 />
               </Form.Group>
               <Form.Group className="mt-4">
@@ -207,8 +207,8 @@ const Allocations = () => {
                 <Form.Control
                   name="endHour"
                   onChange={onChange}
-                  value={allocation.endHour}
-                  placeholder= "Ex: 00:00"
+                  value={(allocation.endHour ? allocation.endHour.replace('+0000', '') : allocation.endHour) }
+                  placeholder="Ex.: 21:00"
                 />
               </Form.Group>
             </Form>
