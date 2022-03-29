@@ -41,7 +41,7 @@ const columns = [
 ];
 
 
-const INITIAL_STATE = { id: 0, professorId: 0, courseId: 0, dayOfWeek: ""};
+const INITIAL_STATE = { id: 0, professorId: 0, courseId: 0, dayOfWeek: "", startHour: "00:00", endHour: "00:00"};
 
 const Allocations = () => {
   const [visible, setVisible] = useState(false);
